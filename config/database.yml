@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: ambiental-awareness_production
+  database: ambiental_awareness_production
   username: root
   password: admin
