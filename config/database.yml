@@ -49,6 +49,7 @@ test:
 #
 production:
   <<: *default
+  socket: /var/run/mysqld/mysqld.sock
   database: ambiental_awareness_production
   username: root
   password: admin
