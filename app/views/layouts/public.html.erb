@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dota2 Training Grounds</title>
+    <!-- meta -->
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="initial-scale=1.0 maximum-scale=1.0 user-scalable=no">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- meta::facebook -->
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:url" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:type" content="website">
+    <!-- meta::twitter -->
+    <meta name="twitter:card" content="">
+    <meta name="twitter:image" content="">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:creator" content="">
+    <!-- stylesheets::front-end framework -->
+    <!-- stylesheets::fonts -->
+    <link href="/assets/fonts/brandon/font.css" rel="stylesheet">
+    <!-- stylesheets::vendor -->
+    <link href="/assets/vendor/animate/animate.css" rel="stylesheet">
+    <!-- stylesheets::main -->
+    <link href="/assets/styles/main.min.css" rel="stylesheet">
+    <!-- csrf meta tags -->
+    <%= csrf_meta_tags %>
+</head>
+<body>
+
+    <%= yield %>
+    
+    <!-- scripts::jquery -->
+    <script src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- scripts::front-end framework -->
+    <script src="/assets/bower_components/foundation/js/foundation.min.js"></script>
+    <!-- scripts::vendor -->
+    <!-- scripts::main -->
+    <script src="/assets/scripts/main.min.js"></script>
+    <!-- scripts::rails -->
+    <%= javascript_include_tag 'application' %>
+    
+    <%= yield :javascript %>
+</body>
+</html>

@@ -1,0 +1,71 @@
+/*
+ * Import setting and foundation
+ * ----------------------------------------------------- */
+@import "settings";
+@import "../../bower_components/foundation/scss/foundation";
+
+/*
+ * Style
+ * ----------------------------------------------------- */
+
+span.red {
+  color: #c33d2b;
+}
+
+#topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding-top: 80px;
+  .topbar__logo {
+    width: 150px;
+  }
+  .topbar__nav {
+    text-align: center;
+    margin-top: 10px;
+    a {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+}
+
+#hero {
+  position: relative;
+  min-height: 700px;
+  background-image: url(/assets/images/bg.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  .hero__bg {
+    opacity: 0;
+  }
+  .hero__header {
+    position: absolute;
+    top: 55%;
+    transform: translateY(-55%);
+    left: 0;
+    right: 0;
+    width: 100%;
+    .hero__header-title,  
+    .hero__header-subtitle {
+      color: #fff;
+      font-family: 'Brandon Grotesque';
+      text-transform: uppercase;
+    }
+    .hero__header-title {
+      font-weight: 100;
+      font-size: 105px;      
+    } 
+    .hero__header-subtitle {
+      font-size: 30px;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+  }
+  .hero__signin {
+    margin-top: 30px;
+    display: block;
+  }
+}

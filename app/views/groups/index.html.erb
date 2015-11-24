@@ -1,0 +1,86 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="ibox float-e-margins m-t-xl">
+            <div class="ibox-content m-t-xl">
+                <% colors = ['yellow-bg', 'lazur-bg', 'red-bg']%>
+                <% icons = ['fa-tree', 'fa-cloud', 'fa-fire']%>
+                <% @groups.each_with_index do |group, index| %>
+                    <div class="col-lg-4 m-t-xl">
+                        <a href="<%= group_path(group) %>">
+                            <div class="widget 
+                                <%= 'yellow-bg' if group.name == "Air Pollution" %> 
+                                <%= 'lazur-bg' if group.name == "Temperature" %>
+                                <%= 'red-bg' if group.name == "Fire Presence" %>
+                                no-padding text-center">
+                                <div class="p-m">
+                                    <i class="fa 
+                                    <%= 'fa-tree' if group.name == "Air Pollution" %> 
+                                    <%= 'fa-cloud' if group.name == "Temperature" %>
+                                    <%= 'fa-fire' if group.name == "Fire Presence" %>
+                                    fa-4x m-t-lg"></i>
+                                    <h1 class="m-b-lg"><%= group.name %></h1>
+                                    <p>HIGHEST <%= group.get_sensor_by_highest_value.name %> <%= group.get_sensor_by_highest_value.latest_state.value %></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% end %>
+                <div class="col-xs-12">
+                    <div id="map" style="height: 400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% content_for :javascript do %>
+<script>
+    function initMap() {
+        var myLatLng = {lat:  -5.8368535, lng:-35.2026617};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            scrollwheel: false,
+            zoom: 15
+        });
+
+        <% @sensors.each do |sensor| %>
+        var contentString<%= sensor.id %> = '<div id="content">'+
+              '<div id="siteNotice">'+
+              '</div>'+
+              '<a href="<%= sensor_path(sensor) %>"><h3 id="firstHeading" class="firstHeading"><%= sensor.name %></h3></a>'+
+              '<h1><%= "#{sensor.latest_state.value}" if sensor.group.name == "Air Pollution" %><%= "#{sensor.latest_state.value}˚C" if sensor.group.name == "Temperature" %><%= "NO-FIRE" if sensor.group.name == "Fire Presence"  and sensor.latest_state.value == "0" %><%= "FIRE" if sensor.group.name == "Fire Presence"  and sensor.latest_state.value == "1"%></h1>' +
+              '<div id="bodyContent">'+
+              // '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+              // 'sandstone rock formation in the southern part of the '+
+              // 'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+              // 'south west of the nearest large town, Alice Springs; 450&#160;km '+
+              // '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+              // 'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+              // 'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+              // 'Aboriginal people of the area. It has many springs, waterholes, '+
+              // 'rock caves and ancient paintings. Uluru is listed as a World '+
+              // 'Heritage Site.</p>'+
+              // '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+              // 'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+              // '(last visited June 22, 2009).</p>'+
+              '</div>'+
+              '</div>';
+
+        var infowindow<%= sensor.id %> = new google.maps.InfoWindow({
+            content: contentString<%= sensor.id %>
+        });
+        var marker<%= sensor.id %> = new google.maps.Marker({
+            map: map,
+            position: {lat: <%= sensor.lat %>, lng: <%= sensor.lng %>},
+            title: "<%= sensor.name %>"
+        });
+        marker<%= sensor.id %>.addListener('click', function() {
+            <% @sensors.each do |sensor| %>
+            infowindow<%= sensor.id %>.close(map, marker<%= sensor.id %>);
+            <% end %>
+
+            infowindow<%= sensor.id %>.open(map, marker<%= sensor.id %>);
+        });
+        <% end %>
+    }
+</script>
+<% end %>

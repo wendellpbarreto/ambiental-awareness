@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123214417) do
+ActiveRecord::Schema.define(version: 20151123224904) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(version: 20151123214417) do
   create_table "sensors", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "group_id",   limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.decimal  "lat",                    precision: 10, scale: 6
+    t.decimal  "lng",                    precision: 10, scale: 6
   end
 
   add_index "sensors", ["group_id"], name: "index_sensors_on_group_id", using: :btree

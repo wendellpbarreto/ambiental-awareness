@@ -1,0 +1,112 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="ibox float-e-margins m-t-xl">
+            <div class="ibox-title text-center">
+                <a href="<%= root_path %>" class="pull-left btn btn-lg btn-outline btn-default"><i class="fa fa-angle-left"></i> BACK</a>
+                <h1>
+                    <strong><%= @group.name %></strong>
+                    <i class="fa 
+                    <%= 'fa-tree' if @group.name == "Air Pollution" %> 
+                    <%= 'fa-cloud' if @group.name == "Temperature" %>
+                    <%= 'fa-fire' if @group.name == "Fire Presence" %>
+                    "></i>
+                </h1>
+            </div>
+            <div class="ibox-content">
+                <% @group.sensors.each_with_index do |sensor, index| %>
+                <div class="col-xs-12 col-md-4 m-t-xl">
+                    <a href="<%= sensor_path(sensor) %>">
+                        <div class="widget style1 
+                        <%= 'yellow-bg' if @group.name == "Air Pollution" %> 
+                        <%= 'lazur-bg' if @group.name == "Temperature" %>
+                        <%= 'red-bg' if @group.name == "Fire Presence" %>
+                        ">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <i class="fa 
+                                <%= 'fa-tree' if @group.name == "Air Pollution" %> 
+                                <%= 'fa-cloud' if @group.name == "Temperature" %>
+                                <%= 'fa-fire' if @group.name == "Fire Presence" %>
+                                fa-5x m-t"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <h3><%= sensor.name %></h3>
+                                <% if @group.name == "Air Pollution" %>
+                                <span> Air Pollution </span>
+                                <h2 class="font-bold"><%= sensor.latest_state.value %></h2>
+                                <% elsif @group.name == "Temperature" %>
+                                <span> Temperatura </span>
+                                <h2 class="font-bold"><%= sensor.latest_state.value %>˚C</h2>
+                                <% elsif @group.name == "Fire Presence" %>
+                                <span> Fire Presence </span>
+                                <h2 class="font-bold">
+                                    <%= 'FIRE' if sensor.latest_state.value == '1' %>
+                                    <%= 'NO' unless sensor.latest_state.value == '1'  %>
+                                </h2>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <% end %>
+            <div class="col-xs-12">
+                <div id="map" style="height: 400px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<% content_for :javascript do %>
+<script>
+    function initMap() {
+        var myLatLng = {lat:  -5.8368535, lng:-35.2026617};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            scrollwheel: false,
+            zoom: 15
+        });
+
+        <% @group.sensors.each do |sensor| %>
+        var contentString<%= sensor.id %> = '<div id="content">'+
+              '<div id="siteNotice">'+
+              '</div>'+
+              '<a href="<%= sensor_path(sensor) %>"><h3 id="firstHeading" class="firstHeading"><%= sensor.name %></h3></a>'+
+              '<h1><%= "#{sensor.latest_state.value}" if @group.name == "Air Pollution" %><%= "#{sensor.latest_state.value}˚C" if @group.name == "Temperature" %><%= "NO-FIRE" if @group.name == "Fire Presence"  and sensor.latest_state.value == "0" %><%= "FIRE" if @group.name == "Fire Presence"  and sensor.latest_state.value == "1"%></h1>' +
+              '<div id="bodyContent">'+
+              // '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+              // 'sandstone rock formation in the southern part of the '+
+              // 'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+              // 'south west of the nearest large town, Alice Springs; 450&#160;km '+
+              // '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+              // 'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+              // 'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+              // 'Aboriginal people of the area. It has many springs, waterholes, '+
+              // 'rock caves and ancient paintings. Uluru is listed as a World '+
+              // 'Heritage Site.</p>'+
+              // '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+              // 'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+              // '(last visited June 22, 2009).</p>'+
+              '</div>'+
+              '</div>';
+
+        var infowindow<%= sensor.id %> = new google.maps.InfoWindow({
+            content: contentString<%= sensor.id %>
+        });
+        var marker<%= sensor.id %> = new google.maps.Marker({
+            map: map,
+            position: {lat: <%= sensor.lat %>, lng: <%= sensor.lng %>},
+            title: "<%= sensor.name %>"
+        });
+        marker<%= sensor.id %>.addListener('click', function() {
+            <% @group.sensors.each do |sensor| %>
+            infowindow<%= sensor.id %>.close(map, marker<%= sensor.id %>);
+            <% end %>
+
+            infowindow<%= sensor.id %>.open(map, marker<%= sensor.id %>);
+        });
+        <% end %>
+    }
+</script>
+<% end %>

@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Adelle Basic Rg';
+  src: url('AdelleBasic_Bold.eot'); /* IE9 Compat Modes */
+  src: url('AdelleBasic_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('AdelleBasic_Bold.woff') format('woff'), /* Modern Browsers */
+       url('AdelleBasic_Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('AdelleBasic_Bold.svg#881ebb01ab97e74fa1ba6befa774e03c') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Adelle Basic Rg';
+  src: url('AdelleBasic_BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('AdelleBasic_BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('AdelleBasic_BoldItalic.woff') format('woff'), /* Modern Browsers */
+       url('AdelleBasic_BoldItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('AdelleBasic_BoldItalic.svg#1161e3d38fc365c8c2da1007436f3c26') format('svg'); /* Legacy iOS */
+       
+  font-style:   italic;
+  font-weight:  700;
+}
+

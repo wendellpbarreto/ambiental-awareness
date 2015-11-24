@@ -1,0 +1,91 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title text-center">
+                <a href="<%= group_path(@sensor.group) %>" class="pull-left btn btn-lg btn-outline btn-default"><i class="fa fa-angle-left"></i> BACK</a>
+                <h1>
+                    <strong>
+                        <%= @sensor.group.name %>
+                        <i class="fa 
+                        <%= 'fa-tree' if @sensor.group.name == "Air Pollution" %> 
+                        <%= 'fa-cloud' if @sensor.group.name == "Temperature" %>
+                        <%= 'fa-fire' if @sensor.group.name == "Fire Presence" %>
+                        "></i>
+                    </strong>
+                    SENSOR <%= @sensor.name %>
+                </h1>
+            </div>
+            <div class="ibox-content">
+                <div class="row m-t-xl">
+                    <div class="col-xs-12 col-lg-8" style="min-height: 400px;">
+                        <div class="flot-chart dashboard-chart">
+                            <div class="flot-chart-content" id="flot-dashboard-chart"><canvas id="lineChart" height="100"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4">
+                        <div id="map" style="height: 350px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% content_for :javascript do %>
+<script>
+    function initMap() {
+        var myLatLng = {lat: <%= @sensor.lat %>, lng: <%= @sensor.lng %>};
+
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            scrollwheel: false,
+            zoom: 15
+        });
+
+        // Create a marker and set its position.
+        var marker = new google.maps.Marker({
+            map: map,
+            position: myLatLng,
+            title: 'Hello World!'
+        });
+    }
+
+    $(function () {
+        var lineData = {
+            labels: <%= @sensor.states_dates_to_json.html_safe %>,
+            datasets: [
+                {
+                    label: "Example dataset",
+                    fillColor: "rgba(26,179,148,0.5)",
+                    strokeColor: "rgba(26,179,148,0.7)",
+                    pointColor: "rgba(26,179,148,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26,179,148,1)",
+                    data: <%= @sensor.states_values_to_json %>
+                }
+            ]
+        };
+
+        var lineOptions = {
+            scaleShowGridLines: true,
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleGridLineWidth: 1,
+            bezierCurve: true,
+            bezierCurveTension: 0.4,
+            pointDot: true,
+            pointDotRadius: 4,
+            pointDotStrokeWidth: 1,
+            pointHitDetectionRadius: 20,
+            datasetStroke: true,
+            datasetStrokeWidth: 2,
+            datasetFill: true,
+            responsive: true,
+        };
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+    });
+</script>
+<% end %>

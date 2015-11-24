@@ -1,0 +1,46 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-logotype">
+                <h5 class="nav-logotype__subtitle"></h5>
+                <h5 class="nav-logotype__title"></h5>
+            </li>
+            <li class="nav-header">
+                <div class="logo-element">TG</div>
+                <div class="profile-element"> 
+                    <a href="" class="profile-element__edit-anchor"><i class="fa fa-cog"></i></a>
+                    <div class="profile-element__bg" style=""></div>
+                    <div class="profile-element__photo-crop">
+                        <div class="profile-element__photo" style=""></div>
+                        <h5 class="profile-element__name"></h5>
+                    </div>
+                </div>
+                <div class="profile-element__meta">
+                    <div class="row collapsed">
+                        <div class="col-sm-6">
+                            <div class="profile-element__meta-item bordered">
+                                <h5 class="profile-element__meta-title">4003</h5>
+                                <h5 class="profile-element__meta-subtitle">Matches</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="profile-element__meta-item">
+                                <h5 class="profile-element__meta-title">23%</h5>
+                                <h5 class="profile-element__meta-subtitle">Win Rate</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="active">
+                <a href="<%= root_path %>">
+                    <i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span>
+                </a>
+            </li>
+            <% Dir["app/views/sidebar/*"].each do |file| %>
+              <%= render :file => Rails.root.join(file).to_s %>
+            <% end %>
+        </ul>
+
+    </div>
+</nav>

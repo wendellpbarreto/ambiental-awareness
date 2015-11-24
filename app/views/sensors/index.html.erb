@@ -1,0 +1,27 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="ibox float-e-margins m-t-xl">
+            <div class="ibox-content m-t-xl">
+                <% @sensors.each_with_index do |sensor, index| %>
+                <div class="col-lg-4 m-t-xl">
+                    <a href="<%= sensor_path(sensor) %>">
+                        <div class="widget 
+                        <%= 'yellow-bg' if group.name == "Air Pollution" %> 
+                        <%= 'lazur-bg' if group.name == "Temperature" %>
+                        <%= 'red-bg' if group.name == "Fire Presence" %>
+                        no-padding text-center">
+                        <div class="p-m">
+                            <i class="fa 
+                            <%= 'fa-tree' if @sensor.group.name == "Air Pollution" %> 
+                            <%= 'fa-cloud' if @sensor.group.name == "Temperature" %>
+                            <%= 'fa-fire' if @sensor.group.name == "Fire Presence" %>
+                            fa-4x m-t-lg"></i>
+                            <h1 class="m-b-lg"><%= sensor.name %></h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</div>
