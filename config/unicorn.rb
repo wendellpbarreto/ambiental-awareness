@@ -1,6 +1,6 @@
 # Set your full path to application.
 app_dir = File.expand_path('../../', __FILE__)
-shared_dir = File.expand_path('/home/ubuntu/application/shared/', __FILE__)
+shared_dir = File.expand_path('/home/root/application/shared/', __FILE__)
 
 # Set unicorn options
 worker_processes 2

@@ -5,15 +5,16 @@ require 'mina/rbenv'
 require 'mina/unicorn'
 require 'mina/rvm'
 
-set :domain, '10.9.98.154'
-set :deploy_to, '/home/ubuntu/application'
+set :domain, '162.243.251.221'
+set :deploy_to, '/home/root/application'
 set :repository, 'git@github.com:wendellpbarreto/ambiental-awareness.git'
-set :branch, 'master'
-set :user, 'ubuntu'
+set :branch, 'digitalocean'
+set :user, 'root'
 set :forward_agent, true
 set :port, '22'
 set :unicorn_pid, "#{deploy_to}/shared/pids/application.pid"
 set :shared_paths, ['pids', 'log', 'sockets']
+set :rvm_path, "/usr/local/rvm/scripts/rvm"
 
 task :environment do
   invoke :'rvm:use[2.2]'
