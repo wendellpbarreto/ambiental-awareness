@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: ambiental-awareness_production
-  username: ambiental-awareness
-  password: <%= ENV['AMBIENTAL-AWARENESS_DATABASE_PASSWORD'] %>
+  database: ambiental_awareness_production
+  username: root
+  password: admin
