@@ -19,7 +19,6 @@
                                     <%= 'fa-fire' if group.name == "Fire Presence" %>
                                     fa-4x m-t-lg"></i>
                                     <h1 class="m-b-lg"><%= group.name %></h1>
-                                    <p>HIGHEST <%= group.get_sensor_by_highest_value.name %> <%= group.get_sensor_by_highest_value.latest_state.value %></p>
                                 </div>
                             </div>
                         </a>

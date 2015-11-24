@@ -3,7 +3,7 @@ class Sensor < ActiveRecord::Base
   has_many :states
 
   def latest_state
-  	states.first
+  	states.order(created_at: :desc).first
   end
 
   def latest_state_value
